@@ -1,9 +1,14 @@
 package com.gl.tiny.turms.im.appender;
 
+import com.gl.tiny.turms.im.logger.LogRecord;
+import com.gl.tiny.turms.im.exception.InputOutputException;
+import io.netty.buffer.ByteBuf;
 import lombok.Data;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+
 
 /**
  * @date:2024/11/13
@@ -36,8 +41,7 @@ public abstract class Appender implements AutoCloseable {
 
 
     /**
-     * @date:2024/11/13
-     * @方法描述：把日志写入到对应文件，或者输出到控制台的方法，如果创建的是ConsoleAppender对象，那就会直接调用父类的这个方法
+     * 方法描述：把日志写入到对应文件，或者输出到控制台的方法，如果创建的是ConsoleAppender对象，那就会直接调用父类的这个方法
      * 如果创建的是RollingFileAppender对象，那就会调用RollingFileAppender对象的append()方法，在该方法中，会调用父类的append()方法
      */
     public int append(LogRecord record) {
@@ -46,7 +50,7 @@ public abstract class Appender implements AutoCloseable {
         //也不知道日志信息是怎么存放到ByteBuf对象中，这个ByteBuf可是netty内存池中的内存，使用完毕一定要记得释放，
         //但现在大家还不清楚这是怎么回事，所以大家可以先记着这一点，后面我会为大家具体讲解
         //这里就会得到日志内容
-        ByteBuf buffer = record.data();
+        ByteBuf buffer = record.getData();
         if (buffer.nioBufferCount() == 1) {
             try {//如果这个ByteBuf底层只有一个buffer，那就直接写入
                 return channel.write(buffer.nioBuffer());

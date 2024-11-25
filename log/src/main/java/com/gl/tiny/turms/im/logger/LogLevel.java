@@ -1,4 +1,4 @@
-package com.gl.tiny.turms.im.core;
+package com.gl.tiny.turms.im.logger;
 
 public enum LogLevel {
     DEBUG,

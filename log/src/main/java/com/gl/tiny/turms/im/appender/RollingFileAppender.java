@@ -18,13 +18,17 @@ public class RollingFileAppender extends Appender {
     private static final Set<StandardOpenOption> APPEND_OPTIONS = Set.of(StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND);
 
     //构造方法，file表示存储日志的文件的路径
-    public RollingFileAppender(String file) throws IOException {
+    public RollingFileAppender(String file)  {
 
         //得到Path对象
         Path filePath = Paths.get(file).toAbsolutePath();
 
         //得到可以向文件中写入日志信息的channel
         //channel是父类的成员变量
-        channel = FileChannel.open(filePath, APPEND_OPTIONS);
+        try {
+            channel = FileChannel.open(filePath, APPEND_OPTIONS);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

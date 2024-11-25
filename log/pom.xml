@@ -30,5 +30,17 @@
             <artifactId>lombok</artifactId>
             <version>1.18.32</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.42.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>26.0.1</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>
